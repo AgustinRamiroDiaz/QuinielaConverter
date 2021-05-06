@@ -1,4 +1,4 @@
-let significado = [
+let quinielaValores = [
     "Huevos"
     , "Agua"
     , "Niño"
@@ -102,17 +102,37 @@ let significado = [
 ]
 
 
-function numero2digitosASignificado(numero) {
-    return significado[numero]
+function numero2DigitosASignificado(numero) {
+    return quinielaValores[numero]
 }
 
 function digitosASignificado(numeroString) {
+    if (numeroString.length == 0) return ''
     let listaDeA2DigitosStr = numeroString.match(/.{1,2}/g)
     let listaDeA2Digitos = listaDeA2DigitosStr.map(x => parseInt(x))
-    console.log(listaDeA2DigitosStr)
-    let significadoArr = listaDeA2Digitos.map(numero2digitosASignificado)
+    let significadoArr = listaDeA2Digitos.map(numero2DigitosASignificado)
     
     return significadoArr.join(", ")
 }
 
+function significadoANumero2Digitos(significado) {
+    return quinielaValores.indexOf(significado).toString().padStart(2, '0')
+}
 
+function significadosADigitos(significadoString) {
+    let significados = significadoString.split(', ')
+    return significados.map(x => significadoANumero2Digitos(x)).join('')
+}
+
+
+
+numberInput = document.getElementById('numeroACodificar')
+textInput = document.getElementById('textoACodificar')
+
+numberInput.addEventListener('input', function(evento) {
+    textInput.value = digitosASignificado(evento.target.value)
+})
+
+textInput.addEventListener('input', function(evento) {
+    numberInput.value = significadosADigitos(evento.target.value)
+})
